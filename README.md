@@ -7,3 +7,5 @@ https://drive.google.com/file/d/12noMB0veBs-85zL7uF4vgw5PL-aclWEf/view?usp=shari
 <br>Collabarative filtering code: https://colab.research.google.com/drive/1L2WdDMn05QSNW4YoH70lAISTdAdRRj1V?usp=sharing
 <br>Collabarative filtering model: https://drive.google.com/file/d/1Q9JgaaRxh3sRYq5WvYL3IzWpSe3lnqOZ/view?usp=sharing
 
+Database for trending movies : we will be using python library IMDbPY
+
