@@ -27,10 +27,12 @@
                     <li class="nav-item nav-link js-scroll-trigger"><a class="nav-link active js-scroll-trigger" href="#Trending">trending</a></li>
                     <li class="nav-item nav-link js-scroll-trigger"><a class="nav-link active js-scroll-trigger" href="#Profile">profile</a></li>
                     <li class="nav-item nav-link js-scroll-trigger"><a class="nav-link js-scroll-trigger" href="#contact">contact</a></li>
+                    <li class="nav-item nav-link js-scroll-trigger"></li><button onclick="location.href = '/'" type="submit">LOGOUT</button>
                 </ul>
             </div>
         </div>
     </nav>
+
     <header id="Home" class="masthead" style="background-image:url('{{ url_for('static',filename='assets/img/star-sky.jpg')}}');">
         <div class="intro-body">
             <div class="container">
@@ -939,13 +941,18 @@ body {
             </div>
         </div>
     </section>
-    <section id="Profile" class="content-section text-center" style="height: 699px;border-color: rgba(255,255,255,0);color: rgb(255,255,255);margin-top: 0px;margin-bottom: -59px;" placeho="">
+    <section id="Profile" class="content-section text-center" style="height: 699px;border-color: rgba(255,255,255,0);color: rgb(255,255,255);margin-top: 0px;margin-bottom: -59px;" placeholder="">
         <div class="container" style="margin-top: -136px;">
             <div class="row">
                 <div class="col-lg-8 mx-auto" style="height: 225px;">
                     <h2 style="height: 40px;">profile</h2>
-                    <p style="height: 0px;">Name:&nbsp;</p>
-                    <p style="margin-bottom: 10px;padding: -4px;">DOB:<br>Phone no:<br>Email:<br>Genre:</p><a href="changeuser.html" style="margin-top: 0px;">Change Profile Details</a></div>
+                    <h4 style="color: rgb(255,255,255);">Name:  {{det[1]}}  {{det[2]}} </h4>
+                    <h4 style="color: rgb(255,255,255);margin-bottom: 10px;padding: -4px;">Phone no: {{det[3]}}</h4>
+					<h4 style="color: rgb(255,255,255);margin-bottom: 10px;padding: -4px;">Email: {{det[6]}}</h4>
+					
+					<h4 style="color: rgb(255,255,255);margin-bottom: 10px;padding: -4px;">Genre: {{det[5]}}</h4>
+					
+					<a href="/changeuser" style="margin-top: 0px;">Change Profile Details</a></div>
             </div>
         </div>
         <div class="container" style="margin-top: 30px;">

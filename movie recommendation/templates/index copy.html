@@ -183,7 +183,6 @@ body {
 </style>
 </head>
 
-
 <div class="container-fluid" >
 	<div class="row">
 		<div class="col-md-12">
@@ -192,14 +191,11 @@ body {
 			<!-- Carousel indicators -->
 			<ol class="carousel-indicators">
 				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-				{%for j in range(1,ns)%}
-				<li data-target="#myCarousel" data-slide-to="{{j}}"></li>
-			{%endfor%}
+				<li data-target="#myCarousel" data-slide-to="1"></li>
+				<li data-target="#myCarousel" data-slide-to="2"></li>
 			</ol>   
 			<!-- Wrapper for carousel items -->
 			
-
-
 
 			<div class="carousel-inner">
 				<div class="carousel-item active">
@@ -207,11 +203,11 @@ body {
 						<div class="col-sm-3" >
 							<div class="thumb-wrapper">
 								<div class="img-box">
-									<img src="{{ia.get_movie(posts[0].movieID).data['cover url']}}" class="img-fluid" alt="">
+									<img src="{{ia.get_movie(posts[2].movieID).data['cover url']}}" class="img-fluid" alt="">
 								</div>
 								<div class="thumb-content">
-									<h4>{{posts[0]['title']}}</h4>
-									<p class="item-price"><strike>{{len}}</strike> <span>{{ns}}</span></p>
+									<h4>{{posts[2]['title']}}</h4>
+									<p class="item-price"><strike>$400.00</strike> <span>$369.00</span></p>
 									<div class="star-rating">
 										<ul class="list-inline">
 											<li class="list-inline-item"><i class="fa fa-star"></i></li>
@@ -225,15 +221,13 @@ body {
 								</div>						
 							</div>
 						</div>
-						
-						
 						<div class="col-sm-3">
 							<div class="thumb-wrapper">
 								<div class="img-box">
-									<img src="{{ia.get_movie(posts[2].movieID).data['cover url']}}" class="img-fluid" alt="">
+									<img src="{{ url_for('static',filename='assets/img/aveng.jpg')}}" class="img-fluid" alt="">
 								</div>
 								<div class="thumb-content">
-									<h4>{{posts[2]['title']}}</h4>
+									<h4>Sony Headphone</h4>
 									<p class="item-price"><strike>$25.00</strike> <span>$23.99</span></p>
 									<div class="star-rating">
 										<ul class="list-inline">
@@ -247,10 +241,7 @@ body {
 									<a href="#" class="btn btn-primary">Add to Cart</a>
 								</div>						
 							</div>
-						</div>
-						
-             							 
-								
+						</div>		
 						<div class="col-sm-3">
 							<div class="thumb-wrapper">
 								<div class="img-box">
@@ -471,8 +462,6 @@ body {
 						</div>
 					</div>
 				</div>
-            			
-						
 			</div>
 			<!-- Carousel controls -->
 			<a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
