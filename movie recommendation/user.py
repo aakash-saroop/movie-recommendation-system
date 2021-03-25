@@ -4,7 +4,9 @@ from movie import webscrap
 from passlib.hash import sha256_crypt
 import psycopg2
 from math import ceil
-
+from textanalysis import returnlabel
+import smtplib
+from flask_mail import Mail
 app=Flask(__name__)
 
 con = psycopg2.connect(
@@ -15,15 +17,10 @@ con = psycopg2.connect(
     port="5432")
 
 cur=con.cursor()
-
-class User:
-    def __init__(self,id,email,password):
-        self.id=id
-        self.email=email
-        self.password=password
-
-    def __repr__(self):
-        return f'<User: {self.id}>'
+cur.execute("select * from public.moviedatabase")
+mdata = cur.fetchall()
+n=len(mdata)
+nslides= n//4 +ceil((n/4)-(n//4))
 
 top = webscrap()
 a={"admin@gmail.com":"qwerty"}
@@ -31,15 +28,15 @@ ia1=imdb.IMDb()
 
 @app.route('/')
 def index():
-    print(type(top[0]))
     session.pop("user",None)
-    n=len(top)
-    print(type(n))
-    nslides= n//4 +ceil((n/4)-(n//4))
+    
+    print(mdata[0])
+    
     print(type(nslides))
-    if nslides>8:
-        nslides=int(8)
-    return render_template('index.html',posts=top,ia=ia1,len=n,ns=nslides)
+    
+    return render_template('index.html',posts=mdata,len=n,ns=4)
+
+    
 @app.route('/login', methods=['POST',"GET"])
 def login():
     
@@ -64,10 +61,12 @@ def login():
         print("hello")
         if email is None:
             flash("no username","danger")
+            print("email")
             return render_template("login.html")
         else:
             if passw == passwo:
                 flash("you are logged in")
+                print(email)
                 session['user']=email
                 d = get_details(email)
                 print(type(d))
@@ -91,42 +90,76 @@ def signup():
             lastname = request.form.get('Last_Name')
             phone = request.form.get('phone')
             Gender = request.form.get('gender')
-            Genre = list(request.form.get('genre').split(','))
+            Genre = request.form.get('genre')
             email = request.form.get('email')
             passw = request.form.get('password')
             passw2 = request.form.get('password2')
             securepassw = sha256_crypt.encrypt(str(passw))
-            if passw == passw2:
-                cur.execute("INSERT INTO public.user (firstname,lastname,phone,gender,genre,email,passw) VALUES (%s,%s,%s::bigint,%s,%s,%s,%s)",(firstname,lastname,phone,Gender,Genre,email,passw));
-                con.commit()
-                con.close()
-                return render_template("login.html")
+            print(email,type(email))
+            t = email_validation(email)
+            print("t=====",t)
+            if t == 0:
+                if passw == passw2:
+                    cur.execute("INSERT INTO public.user (firstname,lastname,phone,gender,genre,email,passw) VALUES (%s,%s,%s::bigint,%s,%s,%s,%s)",(firstname,lastname,phone,Gender,Genre,email,passw));
+                    con.commit()
+                    return redirect(url_for('login'))
+                else:
+                    flash("incorrect password","danger")
+                    return render_template("signup.html")
             else:
-                flash("incorrect password","danger")
-                return render_template("signup.html")
-
-
+                return redirect(url_for('login'))
     return render_template('signup.html')
 
-# @app.route('/changeuser',methods=['POST',"GET"])
-# def change():
-#     if request.method == "POST":
-#         if request.form.get('genre') =='':
-#             return redirect(url_for('user'))
-#         else: 
-#             det=get_details(session['user'])
-#             firstname = request.form.get('First_Name')
-#             lastname = request.form.get('Last_Name')
-#             phone = request.form.get('phone')
-#             Gender = request.form.get('gender')
-#             Genre = list(request.form.get('genre').split(','))
 
-#             return redirect(url_for('user'))
+def email_validation(em):
+    cur.execute("select * from public.user;")
+    rows = cur.fetchall()
+    print("in email")
+    for row in rows:
+        print ("email = ", row[6])
+        if em == row[6]:
+            return 1
+    return 0
+        
 
-#     return redirect(url_for('user'))
+@app.route('/changeuser1',methods=['POST',"GET"])
+def change_userdet():
+    if request.method == "POST":
+        if request.form.get('password') =='':
+            return redirect(url_for('user'))
+        else: 
+            det=get_details(session['user'])
+            firstname = request.form.get('firstname')
+            if firstname=='':
+                firstname=det[1]
+            lastname = request.form.get('lastname')
+            if lastname=='':
+                lastname=det[2]
+            phone = request.form.get('phone')
+            if phone=='':
+                phone=det[3]
+            Gender = request.form.get('Gender')
+            if Gender=='':
+                Gender=det[4]
+            Genre = request.form.get('genre')
+            if Genre=='':
+                Genre=det[5]
+            passw = request.form.get('password')
+            if passw=='':
+                passw=det[7]
+
+            print("\nahsdnisu ",det,firstname,lastname,phone,Gender,Genre)
+            
+            cur.execute( " update  public.user set firstname = '" + firstname + "', lastname = '" + lastname + "', phone = " + phone + ", gender = '" + Gender + "', genre ='" +Genre + "', passw = '" + passw + "' Where email = '" + session['user'] +"'")
+            con.commit()
+            return redirect(url_for('user'))
+    return redirect(url_for('user'))
+
+
     
-@app.route('/changeuser')    
+@app.route('/changeuser',methods=['POST',"GET"])    
 def change():
+    # return redirect(url_for('change1'))
     return render_template('changeuser.html')
 
 @app.route('/forgot')
@@ -137,14 +170,46 @@ def forgot():
 @app.route('/user')
 def user():
     if g.user:
-        #     user = session['user']
-        #     return f"<h1>{user}</h1>"
-        # else:
-        #             return redirect(url_for('login'))
         det=get_details(session['user'])
-        return render_template('user.html',user=session['user'],det=det)
-    return render_template('index.html',posts=top,ia=ia1)
-    
+        return render_template('user.html',user=session['user'],det=det,posts=mdata,len=n,ns=4)
+    return render_template('index.html',posts=mdata)
+
+def update_db(d,a):
+    cur.execute("select * from public.user Where email = '" + session['user'] +"'")
+    row = cur.fetchone()
+    lst=row[5].split(',')
+    temp = 1
+    for i in lst:
+        if i == a:
+            temp = 0
+            break
+    if temp ==1:
+        lst.append(a)
+        st=','.join(lst)
+        cur.execute( " update  public.user set  genre ='" + st + "' Where email = '" + session['user'] +"'")
+        con.commit()
+
+@app.route('/textanalysis',methods=['POST',"GET"])
+def text_analysis():
+    if request.method == "POST":
+        print("in")
+        if request.form.get('genrename') =='':
+            return redirect(url_for('user'))
+        else:
+            print("input") 
+            det=get_details(session['user'])
+            moviename = request.form.get('moviename')
+            genrename = request.form.get('genrename')
+            comment = request.form.get('comment')
+            rating = request.form.get('rating')
+            label = returnlabel(comment)
+            if label==1:
+                update_db(det,genrename)
+
+            return redirect(url_for('user'))
+
+    return redirect(url_for('user'))
+
 def get_details(sess):
     cur.execute("select * from public.user")
     rows = cur.fetchall()
@@ -152,7 +217,7 @@ def get_details(sess):
         print ("ID = ", row[0])
         print ("firstNAME = ", row[1])
         print ("lastNAME = ", row[2])
-        print ("phone = ", row[3])
+        print ("phone = ", type(row[3]))
         print ("gender = ", row[4])
         t=row[5].split(',')
         t.append('emotional')
@@ -165,13 +230,6 @@ def get_details(sess):
             return row
 
 
-
-
-@app.route("/logout")
-def logout():
-    session.pop("user",None)
-    return render_template('index.html',posts=top,ia=ia1)
-
 @app.before_request
 def before_request():
     g.user=None
@@ -179,7 +237,47 @@ def before_request():
     if 'user' in session:
         g.user=session['user']
 
+@app.route("/logout")
+def logout():
+    session.pop("user",None)
+    return redirect(url_for('user'))
 
+@app.route('/contactus',methods=['POST',"GET"])
+def send_email():
+    if request.method == "POST":
+        print("in")
+        if request.form.get('email') =='':
+            return render_template('index.html',posts=mdata,len=n,ns=4)
+        else:
+            print("input") 
+            email = request.form.get('email')
+            phone = request.form.get('phone')
+            subject = request.form.get('subject')
+            message = request.form.get('message')
+            cur.execute("INSERT INTO public.usermessage (email,phone,subject,message) VALUES (%s,%s::bigint,%s,%s)",(email,phone,subject,message));
+            con.commit()
+            return render_template('index.html',posts=mdata,len=n,ns=4)
+    return render_template('index.html',posts=mdata,len=n,ns=4)
+
+@app.route('/contactus1',methods=['POST',"GET"])
+def send_email1():
+    if request.method == "POST":
+        print("in")
+        if request.form.get('email') =='':
+            return redirect(url_for('user'))
+        else:
+            print("input") 
+            email = request.form.get('email')
+            phone = request.form.get('phone')
+            subject = request.form.get('subject')
+            message = request.form.get('message')
+            cur.execute("INSERT INTO public.usermessage (email,phone,subject,message) VALUES (%s,%s::bigint,%s,%s)",(email,phone,subject,message));
+            con.commit()
+            print("done")
+            return redirect(url_for('user'))
+    return redirect(url_for('user'))
+
+###########################################################################
 
 
 @app.route('/registeruser', methods=['POST'])
@@ -195,16 +293,7 @@ def registeruser():
     return "email is {} and password is {} {} {} {} {} {}".format(Genre,Gender,firstname,passw,lastname,phone)
 
 
-@app.route('/login_validation', methods=['POST'])
-def login_validation():
-    email = request.form.get('email')
-    password = request.form.get('password')
-    for i in a:
-        if i ==email:
-            if password == a[i]:
-                return render_template('user.html')
 
-    return "email is {} and password is ".format(email,password)
 
 
 app.secret_key="jzdbvkjbhjvhjzfshfzhjfbzhxbfhzb"

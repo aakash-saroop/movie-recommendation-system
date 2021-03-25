@@ -19,9 +19,7 @@ def webscrap():
     # print ("Cover url: %s" % movie['cover url'])
     return top
 
-# ia=imdb.IMDb()
-# top = ia.get_top250_movies()
-# # print(top[0])
+
 # lst=[]
 # ls = top
 # j = int(0)

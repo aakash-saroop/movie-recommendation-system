@@ -3,5 +3,11 @@ import pickle
 
 model1 = pickle.load(open("nlpmodel", 'rb'))
 print("this is bad movie : ",model1.predict(["this is bad movie"]))
-print("MIB is good film : ",model1.predict(["MIB is good film"]))
-print("this is good film : ",model1.predict(["this is good film"]))
+text = "MIB is good film : "
+if model1.predict([text])[0] == 'positive':
+	print("MIB is good film : ",1)
+else:
+	print("MIB is good film : ",0)
+
+
+print("this is good film : ",type(model1.predict(["this is good film"])[0]))

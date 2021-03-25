@@ -23,10 +23,10 @@
                 value="Menu"><i class="fa fa-bars"></i></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item nav-link js-scroll-trigger"><a class="nav-link active js-scroll-trigger" href="/">Home</a></li>
-                    <li class="nav-item nav-link js-scroll-trigger"><a class="nav-link active js-scroll-trigger" href="/">trending</a></li>
+                    <li class="nav-item nav-link js-scroll-trigger"><a class="nav-link active js-scroll-trigger" href="/user">Home</a></li>
+                    <li class="nav-item nav-link js-scroll-trigger"><a class="nav-link active js-scroll-trigger" href="/user">trending</a></li>
                     <li class="nav-item nav-link js-scroll-trigger"><a class="nav-link active js-scroll-trigger" href="/user">profile</a></li>
-                    <li class="nav-item nav-link js-scroll-trigger"><a class="nav-link js-scroll-trigger" href="/">contact</a></li>
+                    <li class="nav-item nav-link js-scroll-trigger"><a class="nav-link js-scroll-trigger" href="/user">contact</a></li>
                 </ul>
             </div>
         </div>
@@ -38,19 +38,18 @@
         </div>
     </footer>
     <div class="login-clean" style="padding-top: 80px;margin-top: -28px;">
-        <form method="post" action="/changeuser" style="width: 400px;padding: 40px;padding-right: 40px;max-width: 432px;">
+        <form method="post" action="/changeuser1" style="width: 400px;padding: 40px;padding-right: 40px;max-width: 432px;">
             <h2 class="sr-only" style="width: 24px;height: 5px;">Login Form</h2>
             <div class="illustration" style="color: rgb(167,16,48);width: 325px;height: 57px;">
                 <h1 style="font-size: 31px;color: rgb(43,91,112);text-align: center;text-shadow: 2px 0px 0px rgb(0,141,203);">User Details</h1>
             </div>
-            <div class="form-group">
-            <input class="form-control"  type="text" name="firstname" placeholder="First Name" style="margin-bottom: 15px;width: 150px;margin-left: -1px;">
+                    <div class="form-group" action="">
+                    <input class="form-control"  type="text" name="firstname" placeholder="First Name" style="margin-bottom: 15px;width: 150px;margin-left: -1px;">
                     <input class="form-control" type="text" name="lastname" placeholder="Last Name" style="margin-bottom: 16px;width: 150px;height: 42px;padding-top: 3px;margin-left: 171px;margin-top: -59px;">
                     <input class="form-control" type="tel" name="phone" placeholder="Phone" style="margin-bottom: 15px;">
                     <input class="form-control" type="text" name="Gender" placeholder="Gender" style="margin-bottom: 15px;">
                     <input class="form-control" type="text" name="genre" placeholder="Genre" style="margin-bottom: 15px;">
 					<h4 style="color: rgb(43,91,112);margin-bottom: 10px;padding: -4px;">Email:</h4>
-                   
                     <input class="form-control" type="password" name="password" placeholder="Password">
                     <button class="btn btn-primary btn-block" type="submit" style="background: rgb(50,104,143);">change</button>
             </div>
