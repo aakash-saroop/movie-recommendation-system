@@ -183,6 +183,186 @@ body {
 }
 
 </style>
+
+<script type="text/javascript">
+
+function doAction($dp, $na, $ye, $rat, $ge)
+{
+	console.log($dp,$na,$ye,$rat,$ge);
+     $.ajax({
+         type: "POST",
+         url: "/movielink",
+         data: {displaypic: $dp, name: $na, year: $ye, rating: $rat, genre: $ge},
+         success: function(data){
+                     alert( "Data Saved: " + data );
+
+					window.open("/movie", '_blank') ;
+                  },
+		error: function(jqXHR) {
+		alert("error: " + jqXHR.status);
+		console.log(jqXHR);
+	} 
+    });
+}
+</script>
+
+<script type="text/javascript">
+    function changeFunc($i) 
+	{
+	
+		console.log($i)
+	if ($i==1)
+	{
+		console.log("Action");
+		Gen = "Action" //value I want to send 
+		$.ajax(
+			{ 
+			url: '/filter2', 
+			type: 'POST', 
+			data: Gen,
+			success: function(response)
+			{ 
+				$i.text(response) 
+				
+			},
+			error: function(jqXHR) {
+                alert("error: " + jqXHR.status);
+                console.log(jqXHR);
+            } 
+			
+		})
+		}
+	else if ($i==2)
+    	{console.log("Comedy");
+		
+		Gen = "Comedy" //value I want to send 
+		$.ajax(
+			{ 
+			url: '/filter2', 
+			type: 'POST', 
+			data: Gen,
+			success: function(response)
+			{ 
+				$i.text(response) 
+			},
+			error: function(jqXHR) {
+                alert("error: " + jqXHR.status);
+                console.log(jqXHR);
+            } 
+		})
+
+		}
+	else if ($i==3)
+    	{console.log("Drama");
+		Gen = "Drama" //value I want to send 
+		$.ajax(
+			{ 
+			url: '/filter2', 
+			type: 'POST', 
+			data: Gen,
+			success: function(response)
+			{ 
+				$i.text(response) 
+			},
+			error: function(jqXHR) {
+                alert("error: " + jqXHR.status);
+                console.log(jqXHR);
+            } 
+		})
+		}
+	else if ($i==4)
+    	{console.log("Horror");
+		Gen = "Horror" //value I want to send 
+		$.ajax(
+			{ 
+			url: '/filter2', 
+			type: 'POST', 
+			data: Gen,
+			success: function(response)
+			{ 
+				$i.text(response) 
+			},
+			error: function(jqXHR) {
+                alert("error: " + jqXHR.status);
+                console.log(jqXHR);
+            } 
+		})
+		}
+	else if ($i==5)
+    	{console.log("Romance");
+		Gen = "Romance" //value I want to send 
+		$.ajax(
+			{ 
+			url: '/filter2', 
+			type: 'POST', 
+			data: Gen,
+			success: function(response)
+			{ 
+				$i.text(response) 
+			},
+			error: function(jqXHR) {
+                alert("error: " + jqXHR.status);
+                console.log(jqXHR);
+            } 
+		})
+		}
+	else if ($i==6)
+    	{console.log("Documentry");
+		Gen = "Documentry" //value I want to send 
+		$.ajax(
+			{ 
+			url: '/filter2', 
+			type: 'POST', 
+			data: Gen,
+			success: function(response)
+			{ 
+				$i.text(response) 
+			},
+			error: function(jqXHR) {
+                alert("error: " + jqXHR.status);
+                console.log(jqXHR);
+            } 
+		})
+		}
+	else if ($i==7)
+    	{console.log("Animation");
+		Gen = "Animation" //value I want to send 
+		$.ajax(
+			{ 
+			url: '/filter2', 
+			type: 'POST', 
+			data: Gen,
+			success: function(response)
+			{ 
+				$i.text(response) 
+			},
+			error: function(jqXHR) {
+                alert("error: " + jqXHR.status);
+                console.log(jqXHR);
+            } 
+		})
+		}
+	else
+    	{console.log("All");
+		Gen = "All" //value I want to send 
+		$.ajax(
+			{ 
+			url: '/filter2', 
+			type: 'POST', 
+			data: Gen,
+			success: function(response)
+			{ 
+				$i.text(response) 
+			},
+			error: function(jqXHR) {
+                alert("error: " + jqXHR.status);
+                console.log(jqXHR);
+            } 
+		})
+		}
+   }
+
+  </script>
 </head>
 
 <div class="container-fluid" >
@@ -208,12 +388,15 @@ body {
 						<div class="col-sm-3">
 							<div class="thumb-wrapper">
 								<div class="img-box">
-									<img src="{{ url_for('static',filename=posts[len-1-j][3])}}" rel="icon" sizes="180x180" class="img-fluid" alt="">
+									<img src="{{ url_for('static',filename=posts1[len-1-j][3])}}" rel="icon" sizes="180x180" class="img-fluid" alt="">
 								</div>
 								<div class="thumb-content">
-									<h4>{{j[0]}}</h4>
-									<p class="year">Year {{posts[len-1-j][1]}}</p>
-									<p class="year">Rating {{posts[len-1-j][2]}}</p>
+									<h4>{{posts1[len-1-j][0]}}</h4>
+									<p class="year">Year {{posts1[len-1-j][1]}}</p>
+									<p class="year">Rating {{posts1[len-1-j][2]}}</p>
+									<p class="year"> {{posts1[len-1-j][4]}}</p>
+									<button Dp="{{posts1[len-1-j][3]}}"  Nam="{{posts1[len-1-j][0]}}"  Ye="{{posts1[len-1-j][1]}}" Ra="{{posts1[len-1-j][2]}}" Ge="{{posts1[len-1-j][4]}}" onclick="doAction('{{posts1[len-1-j][3]}}','{{posts1[len-1-j][0]}}','{{posts1[len-1-j][1]}}','{{posts1[len-1-j][2]}}','{{posts1[len-1-j][4]}}')" >Get Link</button>
+
 								</div>						
 							</div>
 						</div>
@@ -249,7 +432,7 @@ body {
     }
     </style>
 <div class="input-group">
-  <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+  <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon" onchange="changeFunc(value);" >
     <option selected>Choose...</option>
     <option value="1">Action</option>
     <option value="2">Comedy</option>
@@ -258,13 +441,13 @@ body {
     <option value="5">Romance</option>
     <option value="6">Documentry</option>
     <option value="7">Animation</option>
-      
-      
+    <option value="8">All</option>
+
   </select>
-  <div class="input-group-append">
-    <button class="btn btn-outline-secondary" type="button">SHOW</button>
-  </div>
-</div><head>
+
+</div>
+
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Bootstrap Product List Carousel for Ecommerce Website</title>
@@ -403,7 +586,9 @@ body {
 }
 
 </style>
+ 
 </head>
+
 
 <div class="container-fluid">
 	<div class="row">
@@ -423,7 +608,7 @@ body {
 				<div class="carousel-item active">
 					<div class="row">
 
-						{% for j in posts %}
+						{% for j in posts2 %}
 						<div class="col-sm-3">
 							<div class="thumb-wrapper">
 								<div class="img-box">
@@ -433,6 +618,9 @@ body {
 									<h4>{{j[0]}}</h4>
 									<p class="year">Year {{j[1]}}</p>
 									<p class="year">Rating {{j[2]}}</p>
+									<p class="year"> {{j[4]}}</p>
+									<button Dp="{{j[3]}}"  Nam="{{j[0]}}"  Ye="{{j[1]}}" Ra="{{j[2]}}" Ge="{{j[4]}}" onclick="doAction('{{j[3]}}','{{j[0]}}','{{j[1]}}','{{j[2]}}','{{j[4]}}')" >Get Link</button>
+
 								</div>						
 							</div>
 						</div>
@@ -461,7 +649,7 @@ body {
 </div>
 
 </section>
-    <section id="Trending-1" class="content-section text-center" style="margin-top: 75px;height: 609px;margin-bottom: 0px;color: rgb(242,242,242);">
+    <section id="Trending-1" class="content-section text-center" style="margin-top: 145px;height: 609px;margin-bottom: -50px;color: rgb(242,242,242);">
         <div class="container" style="margin-top: 155px;">
             <div class="row" style="height: 500px;margin-top: -263px;margin-bottom: 0px;">
                 <div class="col-lg-8 mx-auto" style="height: 436px;margin-top: 115px;margin-bottom: -7px;">

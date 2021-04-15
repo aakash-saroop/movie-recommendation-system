@@ -2,33 +2,33 @@ import random
 import urllib.request
 import imdb
 import psycopg2
-from flask_mail import Mail
+# from flask_mail import Mail
 
 
-from flask_mail import Message
+# from flask_mail import Message
 
-import smtplib
+# import smtplib
 
-sender = 'bhairavn10@gmail.com'
-receivers = ['bhairavn10@gmail.com']
+# sender = 'bhairavn10@gmail.com'
+# receivers = ['bhairavn10@gmail.com']
 
-message = """From: From Person <from@fromdomain.com>
-To: To Person <to@todomain.com>
-Subject: SMTP e-mail test
+# message = """From: From Person <from@fromdomain.com>
+# To: To Person <to@todomain.com>
+# Subject: SMTP e-mail test
 
-This is a test e-mail message.
-"""
+# This is a test e-mail message.
+# """
 
-try:
-   smtpObj = smtplib.SMTP('localhost')
-   smtpObj.sendmail(sender, receivers, message)         
-   print ("Successfully sent email")
-except SMTPException:
-   print ("Error: unable to send email")
+# try:
+#    smtpObj = smtplib.SMTP('localhost')
+#    smtpObj.sendmail(sender, receivers, message)         
+#    print ("Successfully sent email")
+# except SMTPException:
+#    print ("Error: unable to send email")
 
-# ia=imdb.IMDb()
+ia=imdb.IMDb()
 # index()
-# top = ia.get_top250_movies()
+top = ia.get_top250_movies()
 
 # def download_image(url):
 #     name = random.randrange(1,100)
@@ -36,30 +36,37 @@ except SMTPException:
 #     urllib.request.urlretrieve(url,fullname)     
 
 
-# con = psycopg2.connect(
-#     host = "127.0.0.1",
-#     database = "movierecommender",
-#     user = "postgres",
-#     password = "admin",
-#     port="5432")
+con = psycopg2.connect(
+    host = "127.0.0.1",
+    database = "movierecommender",
+    user = "postgres",
+    password = "admin",
+    port="5432")
 
-# cur=con.cursor()
-
+cur=con.cursor()
+# for i in  top:
+#    st="desktop"+".jpg"
+#    urllib.request.urlretrieve(ia.get_movie(i.movieID).data['cover url'],st)
+#    print (st)
 
 # print()
 # # print("hello")
 # # print (ia.get_movie(top[0].movieID).data['cover url'])
-# import urllib.request
-# j=int(0)
-# # for i in top:
-# #     # print(i['title'],type(i['year']),type(str(i['rating'])))
-# #     st='assets/images/' + str(j) + '.jpg'
-# #     # a=ia.get_movie(i.movieID).data['genres']
-# #     # print(a)
-# #     cur.execute("INSERT INTO public.moviedatabase (title,year,rating,image) VALUES (%s,%s::bigint,%s,%s)",(i['title'],i['year'],i['rating'],st));
-# #     con.commit()
-# #     j+=1
-# #     print(j)
+import urllib.request
+j=int(0)
+for i in top:
+   # print(i['title'],type(i['year']),type(str(i['rating'])))
+   s='assets/images/' + str(j) + '.jpg'
+   a=ia.get_movie(i.movieID).data['genres']
+   st="images/"+str(j)+".jpg"
+   urllib.request.urlretrieve(ia.get_movie(i.movieID).data['cover url'],st)
+   gn = ','.join(a)
+   print(ia.get_movie(i.movieID).data['cover url'])
+   print(i['title'], i['year'], i['rating'], gn, s, j)
+   cur.execute("INSERT INTO public.moviedatabase (title,year,rating,image,genre) VALUES (%s,%s::bigint,%s,%s,%s)",(i['title'],i['year'],i['rating'],s,gn));
+   con.commit()
+   j+=1
+# print(j)
 # cur.execute("select * from public.moviedatabase")
 # mdata = cur.fetchall()
 # for i in mdata:
