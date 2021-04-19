@@ -9,3 +9,4 @@ https://drive.google.com/file/d/1X8618hlI4X6J-s-9Yq_2UwlJ1IaiXP--/view?usp=shari
 
 <br>Database with revised movie and user ids: https://drive.google.com/file/d/1M9Ni51DXptEmI_5IUolNqQ5mVEtoNuiU/view?usp=sharing
 <br>Dataset of movie posters: https://drive.google.com/file/d/1THNVBatWjUzUvzB5gnc6Me6i4somj_ot/view?usp=sharing
+<br>Database of movie genres: https://drive.google.com/file/d/1x3W1JxFr-XXwR1jhqrlsO2qZJ-0w5hIf/view?usp=sharing
