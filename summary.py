@@ -33,10 +33,28 @@ def movie_summary(name):
     summary_class = s2.find_all('div',{'class':"summary_text"})
     summary_class = summary_class[0]
     summary_text = str(summary_class)
-    #print(type(summary_text))
-    #print(summary_text)
     summary_text = re.findall("(.*)", summary_text)
-    return(summary_text[2].strip())
+    summary_text = summary_text[2].strip()
+
+    director_class = s2.find_all('div',{'class':"credit_summary_item"})
+    director_class = str(director_class[0])
+    director_name = re.findall(">(.*)</a>", director_class)
+    director_name = director_name[0]
+
+    table_class = s2.find_all('table',{'class':"cast_list"})
+    table_class = table_class[0]
+    body = table_class.find_all("tr")
+    cast_list = []
+    for person in body:
+        actor_names = re.findall("<img alt=(.*) class=", str(person))
+        if len(actor_names)>0:
+            cast_list.append(actor_names)
+
+
+    #actor_names = re.findall(">(.*)</a>", table_class)
+    #print(actor_names)
+
+    return(summary_text, director_name, cast_list)
 #description = .find_all('div')
 #print(description)'''
 name = input("Enter name of the movie")
