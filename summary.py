@@ -49,6 +49,8 @@ def movie_summary(name):
         actor_names = re.findall("<img alt=(.*) class=", str(person))
         if len(actor_names)>0:
             cast_list.append(actor_names)
+    director_name = director_name.split("</a>")
+    director_name = director_name[0]
 
 
     #actor_names = re.findall(">(.*)</a>", table_class)
