@@ -1,13 +1,13 @@
-To use our project:
-1)	Clone our project
-2)	Download the movie images from the link in readme and unzip it in static/assets/ Note: keep the name as it is.
-3)	Download closest_users.csv in the main directory
-4)	Setup database to postgresql pg admin
-  4.1) Download the database link given in the readme section
-  4.2) import the database in pgadmin
-  4.3) configure the database in user.py if required
-5)	Use command prompt and type python user.py
-6)	Then direct to the local host link
+To use our project:<br>
+1)	Clone our project<br>
+2)	Download the movie images from the link in readme and unzip it in static/assets/ Note: keep the name as it is.<br>
+3)	Download closest_users.csv in the main directory<br>
+4)	Setup database to postgresql pg admin <br>
+  4.1 Download the database link given in the readme section <br>
+  4.2 import the database in pgadmin <br>
+  4.3 configure the database in user.py if required <br>
+5)	Use command prompt and type python user.py<br>
+6)	Then direct to the local host link<br>
 
 **netflix_images : https://drive.google.com/file/d/1i2wHrs58E6NpivzM9OWIT0aoOGp9J8Gn/view?usp=sharing**
 
