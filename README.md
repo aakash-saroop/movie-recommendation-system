@@ -10,8 +10,11 @@ To use our project:
 6)	Then direct to the local host link
 
 **netflix_images : https://drive.google.com/file/d/1i2wHrs58E6NpivzM9OWIT0aoOGp9J8Gn/view?usp=sharing**
+
 **closest_users.csv : https://drive.google.com/file/d/1MmUjgxRu9j7GntviTpI1OvlZ3HrMElEW/view?usp=sharing**
+
 **moviedatabase.sql : https://drive.google.com/file/d/10sgOu6vPn1XOoygumwKCQSYhiLcEGbCR/view?usp=sharing**
+
 **--------------------------------------------------------------------------------------------------------------------**
 
 
