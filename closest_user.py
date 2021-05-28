@@ -1,12 +1,11 @@
+import pandas as pd
+import numpy as np
+from colab_filter import recommend
+
 def closest(lst):
+      
   combined = np.zeros((9623889, 4))
-  combined[:,:3] = X
-  combined[:,3] = y.reshape(9623889)
-  df = pd.DataFrame(combined, columns =['Users', 'Movieid1',
-                                           'Movieid2', 'Rating'])
-
-  result_df = df.sort_values(by = 'Users')
-
+  result_df = pd.read_csv("closest_users.csv")
   combined = result_df.to_numpy()
   error = 1000
   closest_id = 5
@@ -18,7 +17,7 @@ def closest(lst):
     no_of_movies = 0
     user_end = user_start
     for x in range (user_start, 9623889):
-      if (combined[x, 0]==user_id):
+      if (combined[x, 1]==user_id):
 
         no_of_movies+=1
       else:
@@ -29,9 +28,8 @@ def closest(lst):
       #if user_start==0:
       #print(combined[x,:])
       for tup in lst:
-        if combined[x,1]==tup[0]:
-          iter_error= iter_error-10+ abs(tup[1]-combined[x,3])
-
+        if combined[x,2]==tup[0]:
+          iter_error= iter_error-10+ abs(tup[1]-combined[x,4])
 
     #if iter_error<10:
     #  print(iter_error)
@@ -42,14 +40,11 @@ def closest(lst):
 
       #print(closest_id)
     user_start = user_end
+
   return closest_id
 
-
-
-
-
-
-
 # tuples in the form of movieid, rating
-lst = [(521,3),(241,3),(1311,4)]
-print(closest(lst))
+# lst = [(521,3),(241,3),(1311,4)]
+# temp_id = closest(lst)
+
+# print(recommend(temp_id))
